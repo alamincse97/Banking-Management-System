@@ -1,8 +1,28 @@
 import datetime
 
+# Transaction History.
+class TrxHistory:
+    def __init__(self, account, amount, type) -> None:
+        self.account = account
+        self.amount = amount
+        self.type = type
+        self.date = datetime.datetime.now()
+
+# Loan Details
+class LoanDetails:
+    def __init__(self, account, amount, interest, duration) -> None:
+        self.account = account
+        self.amount = amount
+        self.interest = interest / 100
+        self.duration = duration
+        self.paid_amount = 0
+        self.date = datetime.datetime.now()
+
+# User
 class User:
     def __init__(self, name, email, password, balance) -> None:
         self.name = name
+        self.email = email
         self.__password = password
         self.role = "User"
         self.balance = balance
@@ -21,8 +41,8 @@ class User:
             self.transaction_history.append(obj)
 
     def withdraw_money(self, bank, amount):
-        resul = bank.withdraw(self, amount)
-        if resul:
+        result = bank.withdraw(self, amount)
+        if result:
             obj = TrxHistory("own", amount, "Withdraw")
             self.transaction_history.append(obj)
 
@@ -39,7 +59,7 @@ class User:
                 print("Bank is bankrupt")
         else:
             print("Insufficient balance")
-    
+
     def get_transaction_history(self):
         if len(self.transaction_history) == 0:
             print("No transaction history found")
@@ -50,6 +70,7 @@ class User:
                 print(
                     f"Transaction Type: {item.type}, Amount: {item.amount}, Account: {item.account}, Date: {time_format}"
                 )
+
     def available_balance(self):
         return self.balance
 
@@ -63,19 +84,3 @@ class User:
                 print(
                     f"Loan Amount: {item.amount}, Interest: {item.interest}, Duration: {item.duration}, Date: {time_format}"
                 )
-class TrxHistory:
-    def __init__(self, account, amount, type) -> None:
-        self.account = account
-        self.amount = amount
-        self.type = type
-        self.date = datetime.datetime.now()
-
-
-class LoanDetails:
-    def __init__(self, account, amount, interest, duration) -> None:
-        self.account = account
-        self.amount = amount
-        self.interest = interest / 100
-        self.duration = duration
-        self.paid_amount = 0
-        self.date = datetime.datetime.now()
